@@ -1,4 +1,4 @@
-package de.crackscout123.trollbot;
+package de.crackscout.trollbot;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -10,9 +10,10 @@ import com.github.theholywaffle.teamspeak3.TS3Query;
 import com.github.theholywaffle.teamspeak3.api.event.TS3EventType;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
-import de.crackscout123.events.TS3Events;
-import de.crackscout123.utils.AfkCollector;
-import de.crackscout123.utils.Debug;
+import de.crackscout.Collectors.AfkCollector;
+import de.crackscout.Collectors.OnlineCollector;
+import de.crackscout.events.TS3Events;
+import de.crackscout.utils.Debug;
 
 
 
@@ -28,7 +29,7 @@ public class Main {
 	  public static HashMap<String, Boolean> whitelist = new HashMap<>();
 	  public static ArrayList<Integer> clients = new ArrayList<>();
 
-	  private static Thread collectorProzess;
+	  private static Thread collectorProzess, onlineCollector;
 
 	  public static void main(String[] args) {
 		  
@@ -38,9 +39,9 @@ public class Main {
 			
 		    query.connect();
 		    
-		    api.login("serveradmin", "password");
+		    api.login("serveradmin", "******");
 		    api.selectVirtualServerById(1);
-		    api.setNickname("TrollBot");
+		    api.setNickname("Türsteher <dev>");
 		   
 		    api.registerEvent(TS3EventType.SERVER);
 		    
@@ -51,6 +52,9 @@ public class Main {
 		    
 		    collectorProzess = new Thread(new AfkCollector(api));
 		    collectorProzess.start();
+		    
+		    onlineCollector = new Thread(new OnlineCollector(api));
+		    onlineCollector.start();
 		    
 		    Debug.info("Bot started.");
 		    

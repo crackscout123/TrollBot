@@ -1,4 +1,4 @@
-package de.crackscout123.utils;
+package de.crackscout.Collectors;
 
 import java.util.List;
 
@@ -27,7 +27,6 @@ public class AfkCollector implements Runnable{
 			try {
 				Thread.sleep(sleep);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				System.out.println("Encountered an interrupted exception while sleeping, shutting down collection service... \n Dumping error:");
 				e.printStackTrace();
                 return;

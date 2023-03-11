@@ -1,4 +1,4 @@
-package de.crackscout123.utils;
+package de.crackscout.utils;
 
 import java.sql.Timestamp;
 

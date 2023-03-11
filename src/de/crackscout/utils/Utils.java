@@ -1,4 +1,4 @@
-package de.crackscout123.utils;
+package de.crackscout.utils;
 
 import java.net.DatagramSocket;
 import java.net.InetAddress;
@@ -8,7 +8,7 @@ import java.util.ArrayList;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
-import de.crackscout123.trollbot.Main;
+import de.crackscout.trollbot.Main;
 
 
 
@@ -22,8 +22,8 @@ public class Utils {
 	}
 	
 	public static boolean isOp(Client client) {
-		admin.add("someid="); //cracky
-		admin.add("someid="); //Tizi
+		admin.add("authkey="); //cracky
+		admin.add("authkey="); //Tizi
 		
 		if(admin.contains(client.getUniqueIdentifier())) {
 			System.out.println("Access granted: " + client.getUniqueIdentifier());
@@ -36,8 +36,8 @@ public class Utils {
 	}
 		
 	
-	public static Client getClientByID() {
-		return null;
+	public static Client getClientByID(Integer id) {
+		return Main.api.getClientByNameExact(getUserByID(id), false);
 	}
 	
 	public static Client t;

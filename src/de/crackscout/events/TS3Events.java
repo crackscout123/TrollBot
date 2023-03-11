@@ -1,4 +1,4 @@
-package de.crackscout123.events;
+package de.crackscout.events;
 
 
 
@@ -22,9 +22,10 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
-import de.crackscout123.trollbot.Main;
-import de.crackscout123.utils.Debug;
-import de.crackscout123.utils.Utils;
+import de.crackscout.Collectors.OnlineCollector;
+import de.crackscout.trollbot.Main;
+import de.crackscout.utils.Debug;
+import de.crackscout.utils.Utils;
 
 
 public class TS3Events{
@@ -170,17 +171,16 @@ public class TS3Events{
 				  return;
 			  }
     		  System.out.println(e.getInvokerName()+": !help");
-    		  Main.api.sendPrivateMessage(sender.getId(), "============| BOT HELP |============");
-
-    		  Main.api.sendPrivateMessage(sender.getId(), "| !list 										List player id's & names. ");
-    		  Main.api.sendPrivateMessage(sender.getId(), "| !trollmove <id> <amount>				Move a user constantly. 	max. 100 ");
-    		  Main.api.sendPrivateMessage(sender.getId(), "| !trollpoke <id> <amount> <msg>		Poke a user with a custom message.		max. 100 ");
-    		  Main.api.sendPrivateMessage(sender.getId(), "| !kick <id> <reason>					Kick a player anonymously");
-    		  
-    		  Main.api.sendPrivateMessage(sender.getId(), "============| BOT HELP |============");
-    	  }
+    		  Main.api.sendPrivateMessage(sender.getId(), "\n"
+    		  		+ "============| BOT HELP |============\n"
+    		  		+ "| !list 										List player id's & names. \n"
+    		  		+ "!trollmove <id> <amount>				Move a user constantly. 	max. 100 \n"
+    		  		+ "| !trollpoke <id> <amount> <msg>		Poke a user with a custom message.		max. 100 \n"
+    		  		+ "| !kick <id> <reason>					Kick a player anonymously\n"
+    		  		+ "============| BOT HELP |============");
+    	  	}
     	  
-      }
+     }
      
      
 
@@ -190,6 +190,8 @@ public class TS3Events{
      
      void removeClient(Integer id) {
 	   	 Main.clients.remove(id);
+	   	 System.out.println("getClientByID: " + Utils.getClientByID(id));
+	   	 OnlineCollector.activClients.remove(Utils.getClientByID(id));
 	   	 Debug.info("removed: " + id);
      }
 

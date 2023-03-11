@@ -1,4 +1,4 @@
-package de.crackscout123.events;
+package de.crackscout.events;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,8 +7,8 @@ import java.util.TimerTask;
 
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
-import de.crackscout123.trollbot.Main;
-import de.crackscout123.utils.Debug;
+import de.crackscout.trollbot.Main;
+import de.crackscout.utils.Debug;
 
 public class AntiAFK {
 	
