@@ -24,6 +24,7 @@ public class Utils {
 	public static boolean isOp(Client client) {
 		admin.add("authkey="); //cracky
 		admin.add("authkey="); //Tizi
+		admin.add("authkey="); //BTV
 		
 		if(admin.contains(client.getUniqueIdentifier())) {
 			System.out.println("Access granted: " + client.getUniqueIdentifier());

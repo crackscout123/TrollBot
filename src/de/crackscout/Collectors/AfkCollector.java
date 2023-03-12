@@ -1,5 +1,6 @@
 package de.crackscout.Collectors;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import com.github.theholywaffle.teamspeak3.TS3Api;
@@ -12,6 +13,7 @@ public class AfkCollector implements Runnable{
     private int afkChannelId = 65;
     private int musicChannelId = 64;
     private int maxIdleTime = 600*1000; // time in seconds x 1000
+    public ArrayList<Integer> whitelistedUsers = new ArrayList<>();
     
     
     public AfkCollector(TS3Api api) {
@@ -43,6 +45,13 @@ public class AfkCollector implements Runnable{
 	
 	public void moveClient(Client client) {
 		try {
+			
+			
+			if(whitelistedUsers.contains(client.getId())) {
+				System.out.println("skipped " + client.getNickname());
+				return;
+			}
+			
 	        if (client.getId() != api.whoAmI().getId() && client.getChannelId() != afkChannelId && client.getChannelId() != musicChannelId && client.getIdleTime() > maxIdleTime) {
 	        	api.moveClient(client.getId(), afkChannelId);
 	            api.sendPrivateMessage(client.getId(), "Du wurdest in den AFK-Channel verschoben!");

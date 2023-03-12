@@ -22,6 +22,7 @@ import com.github.theholywaffle.teamspeak3.api.event.TS3Listener;
 import com.github.theholywaffle.teamspeak3.api.event.TextMessageEvent;
 import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
+import de.crackscout.Collectors.AfkCollector;
 import de.crackscout.Collectors.OnlineCollector;
 import de.crackscout.trollbot.Main;
 import de.crackscout.utils.Debug;
@@ -37,12 +38,32 @@ public class TS3Events{
 	  
     Main.api.registerAllEvents();
     Main.api.addTS3Listeners(new TS3Listener[] { new TS3Listener(){
+    	
+    AfkCollector afk = new AfkCollector(Main.api);
     
      public void onTextMessage(TextMessageEvent e) {
     	 Client sender = Main.api.getClientByUId(e.getInvokerUniqueId());
 		  String input = e.getMessage();
 		  String [] output = input.split(" ");
 		  System.out.println(output);
+		  
+		  
+		  
+		  if(e.getMessage().startsWith("!stay") && (e.getTargetMode() != TextMessageTargetMode.SERVER)) {
+			  if(!Utils.isOp(sender)) {
+				  System.out.println("Missing auth!");
+				  return;
+			  }
+			  if(afk.whitelistedUsers.contains(sender.getId())) {
+				  afk.whitelistedUsers.remove(sender.getId());
+				  Main.api.sendPrivateMessage(sender.getId(), "Removed from whitelist.");
+			  } else {
+				  afk.whitelistedUsers.add(sender.getId());
+				  Main.api.sendPrivateMessage(sender.getId(), "Added to whitelist.");
+			  }
+		  }
+		  
+		  
 		  //!trollmove
     	  if(e.getMessage().startsWith("!trollmove") && (e.getTargetMode() != TextMessageTargetMode.SERVER)) {
 	    	 if(!Utils.isOp(sender)) {
@@ -193,6 +214,7 @@ public class TS3Events{
 	   	 System.out.println("getClientByID: " + Utils.getClientByID(id));
 	   	 OnlineCollector.activClients.remove(Utils.getClientByID(id));
 	   	 Debug.info("removed: " + id);
+	   	 afk.whitelistedUsers.remove(id);
      }
 
      public void onClientJoin(ClientJoinEvent e) {
