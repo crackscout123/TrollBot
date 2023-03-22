@@ -1,6 +1,8 @@
 package de.crackscout.utils;
 
 import java.sql.Timestamp;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class Debug {
 	
@@ -10,6 +12,7 @@ public class Debug {
 		if(debug) {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			System.out.println(timestamp + " |DEBUG| " + msg);
+		    Logger.getLogger("SomeName").log(Level.INFO, msg);
 		}
 	}
 	
@@ -17,6 +20,8 @@ public class Debug {
 		if(debug) {
 			Timestamp timestamp = new Timestamp(System.currentTimeMillis());
 			System.err.println(timestamp + " |DEBUG| " + msg);
+		    Logger.getLogger("AnotherName").log(Level.WARNING, msg);
+			
 		}
 	}
 	

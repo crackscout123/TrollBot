@@ -3,7 +3,6 @@ package de.crackscout.trollbot;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.logging.Level;
-
 import com.github.theholywaffle.teamspeak3.TS3Api;
 import com.github.theholywaffle.teamspeak3.TS3Config;
 import com.github.theholywaffle.teamspeak3.TS3Query;
@@ -12,6 +11,7 @@ import com.github.theholywaffle.teamspeak3.api.wrapper.Client;
 
 import de.crackscout.Collectors.AfkCollector;
 import de.crackscout.Collectors.OnlineCollector;
+import de.crackscout.Logging.Logging;
 import de.crackscout.events.TS3Events;
 import de.crackscout.utils.Debug;
 
@@ -31,7 +31,13 @@ public class Main {
 
 	  private static Thread collectorProzess, onlineCollector;
 
+	  
+	  
 	  public static void main(String[] args) {
+		  
+		  	// setup my logger
+		  	Logging logg = new Logging();
+		  	logg.setup();
 		  
 			config.setDebugLevel(Level.ALL);
 			
@@ -39,7 +45,7 @@ public class Main {
 			
 		    query.connect();
 		    
-		    api.login("serveradmin", "******");
+		    api.login("serveradmin", "*********");
 		    api.selectVirtualServerById(1);
 		    api.setNickname("Türsteher <dev>");
 		   
@@ -47,6 +53,8 @@ public class Main {
 		    
 		    
 		    Debug.info("Bot starting...");
+		    
+		    
 		    TS3Events.load();
 		    //AntiAFK.load();
 		    
@@ -57,6 +65,7 @@ public class Main {
 		    onlineCollector.start();
 		    
 		    Debug.info("Bot started.");
+		    
 		    
 		    // add all online Clients to this.clients
 		    for(Client client : Main.api.getClients()) {
